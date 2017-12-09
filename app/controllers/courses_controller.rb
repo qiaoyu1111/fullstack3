@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   def index
-    @courses = Course.all
+    @courses = Course.where(:is_hidden => false).order("created_at DESC")
   end
 
   def show
