@@ -31,6 +31,7 @@
         </td>
         <td>
           <%= link_to("Edit", edit_admin_course_path(course)) %>
+          <%= link_to("Delete", admin_course_path(course), :method => :delete, :data => { :confirm => "Are you sure?" }) %>
         </td>
       </tr>
     <% end %>
