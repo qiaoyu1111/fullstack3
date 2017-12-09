@@ -1,0 +1,14 @@
+<div class="row">
+  <% @courses.each do |course| %>
+    <div class="col-xs-6 col-md-3">
+      <%= link_to course_path(course) do %>
+        <% if course.image.present? %>
+          <%= image_tag(course.image.thumb.url, class: "thumbnail") %>
+        <% else %>
+          <%= image_tag("http://placehold.it/200x200&text=No Pic", class: "thumbnail") %>
+        <% end %>
+      <% end %>
+      <%= course.title %>
+    </div>
+  <% end %>
+</div>

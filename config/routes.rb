@@ -3,6 +3,9 @@ Rails.application.routes.draw do
     resources :courses
   end
 
+  resources :courses
+
   devise_for :users
-  root 'welcome#index'
+  root 'courses#index'
+  # root 'welcome#index'
 end
