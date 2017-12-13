@@ -13,9 +13,9 @@ class Admin::PostsController < ApplicationController
 
   def create
     @course = Course.find(params[:course_id])
-    @post = Post.new(post_params)
-    @post.course = @course
     @post.user = current_user
+    @post = Post.new(post_params)
+
 
     if @post.save
       redirect_to admin_course_path(@course)
