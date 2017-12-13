@@ -30,6 +30,7 @@ class Admin::CoursesController < ApplicationController
 
   def create
     @course = Course.new(course_params)
+    @course.user = current_user
 
     if @course.save
       redirect_to admin_courses_path
@@ -47,7 +48,7 @@ class Admin::CoursesController < ApplicationController
   private
 
   def find_course_and_check_permission
-    @course = Group.find(params[:id])
+    @course = Course.find(params[:id])
 
     if current_user != @course.user
       redirect_to root_path, alert: "You have no permission."
