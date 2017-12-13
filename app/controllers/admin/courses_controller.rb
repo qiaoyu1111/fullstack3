@@ -1,6 +1,6 @@
 class Admin::CoursesController < ApplicationController
   layout "admin"
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :admin_required
 
   def index
@@ -18,10 +18,18 @@ class Admin::CoursesController < ApplicationController
 
   def edit
     @course = Course.find(params[:id])
+
+    if current_user != @course.user
+      redirect_to root_path, alert: "You have no permission."
+    end
   end
 
   def update
     @course = Course.find(params[:id])
+
+    if current_user != @course.user
+      redirect_to root_path, alert: "You have no permission."
+    end
 
     if @course.update(course_params)
       redirect_to admin_course_path
@@ -42,6 +50,11 @@ class Admin::CoursesController < ApplicationController
 
   def destroy
     @course = Course.find(params[:id])
+
+    if current_user != @course.user
+      redirect_to root_path, alert: "You have no permission."
+    end
+    
     @course.destroy
     flash[:alert] = "Course deleted"
     redirect_to admin_courses_path

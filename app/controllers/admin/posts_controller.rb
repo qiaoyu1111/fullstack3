@@ -1,8 +1,6 @@
 class Admin::PostsController < ApplicationController
   before_action :authenticate_user!, :only => [:new, :create]
 
-
-
   def new
     @course = Course.find(params[:course_id])
     @post = Post.new
