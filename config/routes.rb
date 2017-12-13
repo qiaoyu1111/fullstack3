@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     resources :courses do
       resources :posts
     end
+    resources :posts
   end
 
   resources :courses

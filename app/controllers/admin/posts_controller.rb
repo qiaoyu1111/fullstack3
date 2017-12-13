@@ -6,6 +6,11 @@ class Admin::PostsController < ApplicationController
     @post = Post.new
   end
 
+  def show
+    @post = Post.find(params[:id])
+    @posts = @post.posts
+  end
+
   def create
     @course = Course.find(params[:course_id])
     @post = Post.new(post_params)
