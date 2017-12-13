@@ -4,6 +4,10 @@
   <%= simple_form_for [:admin, @course, @post] do |f| %>
 
     <div class="form-group">
+      <%= f.input :name %>
+    </div>
+
+    <div class="form-group">
       <%= f.input :content, input_html: { class: "form-control"} %>
     </div>
 
