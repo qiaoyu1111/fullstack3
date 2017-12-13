@@ -1,6 +1,7 @@
 class Admin::CoursesController < ApplicationController
   layout "admin"
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :find_course_and_check_permission, only: [:edit, :update, :destroy]
   before_action :admin_required
 
   def index
@@ -17,20 +18,9 @@ class Admin::CoursesController < ApplicationController
   end
 
   def edit
-    @course = Course.find(params[:id])
-
-    if current_user != @course.user
-      redirect_to root_path, alert: "You have no permission."
-    end
   end
 
   def update
-    @course = Course.find(params[:id])
-
-    if current_user != @course.user
-      redirect_to root_path, alert: "You have no permission."
-    end
-
     if @course.update(course_params)
       redirect_to admin_course_path
     else
@@ -49,18 +39,20 @@ class Admin::CoursesController < ApplicationController
   end
 
   def destroy
-    @course = Course.find(params[:id])
-
-    if current_user != @course.user
-      redirect_to root_path, alert: "You have no permission."
-    end
-    
     @course.destroy
     flash[:alert] = "Course deleted"
     redirect_to admin_courses_path
   end
 
   private
+
+  def find_course_and_check_permission
+    @course = Group.find(params[:id])
+
+    if current_user != @course.user
+      redirect_to root_path, alert: "You have no permission."
+    end
+  end
 
   def course_params
     params.require(:course).permit(:title, :description, :image, :is_hidden)
