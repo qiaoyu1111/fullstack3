@@ -7,14 +7,14 @@ class Admin::PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
-    @posts = @post.posts
+    @course = Course.find(params[:id])
+    @posts = @course.posts
   end
 
   def create
     @course = Course.find(params[:course_id])
-    @post.user = current_user
     @post = Post.new(post_params)
+    @post.user = current_user
 
 
     if @post.save
@@ -27,6 +27,6 @@ class Admin::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:content)
+    params.require(:post).permit(:name, :content)
   end
 end
